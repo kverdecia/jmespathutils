@@ -22,6 +22,11 @@ setup(
             "pre-commit",
             "types-jmespath",
             "tox",
+            "invoke",
+            "twine",
+            "wheel",
+            "zest.releaser",
+            "flake8",
         ]
     },
     author="Karel Antonio Verdecia Ortiz",
