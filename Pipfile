@@ -16,6 +16,11 @@ pipenv-setup = {extras = ["black"], version = "*"}
 pre-commit = "*"
 types-jmespath = "*"
 tox = "*"
+invoke = "*"
+twine = "*"
+wheel = "*"
+"zest.releaser" = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.10"
