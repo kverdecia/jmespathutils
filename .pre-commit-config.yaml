@@ -1,0 +1,28 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v3.2.0
+  hooks:
+  - id: trailing-whitespace
+  - id: end-of-file-fixer
+  - id: check-yaml
+  - id: check-added-large-files
+- repo: https://github.com/Madoshakalaka/pipenv-setup
+  rev: "v3.2.0"
+  hooks:
+    - id: pipenv-setup
+      args: [--dev, --pipfile]
+      additional_dependencies: [".[black]"]
+- repo: https://github.com/pycqa/flake8
+  rev: 4.0.1
+  hooks:
+  - id: flake8
+    additional_dependencies:
+    - flake8-bugbear==21.11.29
+- repo: local
+  hooks:
+    - id: python-test
+      name: python test
+      entry: python setup.py test
+      always_run: true
+      pass_filenames: false
+      language: system

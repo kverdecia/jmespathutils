@@ -19,9 +19,11 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
+from typing import Any
 
 import jmespathutils
+
+sys.path.insert(0, os.path.abspath('..'))
 
 # -- General configuration ---------------------------------------------
 
@@ -105,7 +107,7 @@ htmlhelp_basename = 'jmespathutilsdoc'
 
 # -- Options for LaTeX output ------------------------------------------
 
-latex_elements = {
+latex_elements: dict[str, Any] = {
     # The paper size ('letterpaper' or 'a4paper').
     #
     # 'papersize': 'letterpaper',
@@ -127,9 +129,11 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'jmespathutils.tex',
-     'Functions for jmespath python library Documentation',
-     'Karel Antonio Verdecia Ortiz', 'manual'),
+    (
+        master_doc, 'jmespathutils.tex',
+        'Functions for jmespath python library Documentation',
+        'Karel Antonio Verdecia Ortiz', 'manual'
+    ),
 ]
 
 
@@ -138,9 +142,11 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'jmespathutils',
-     'Functions for jmespath python library Documentation',
-     [author], 1)
+    (
+        master_doc, 'jmespathutils',
+        'Functions for jmespath python library Documentation',
+        [author], 1
+    )
 ]
 
 
@@ -150,13 +156,12 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'jmespathutils',
-     'Functions for jmespath python library Documentation',
-     author,
-     'jmespathutils',
-     'One line description of project.',
-     'Miscellaneous'),
+    (
+        master_doc, 'jmespathutils',
+        'Functions for jmespath python library Documentation',
+        author,
+        'jmespathutils',
+        'One line description of project.',
+        'Miscellaneous'
+    ),
 ]
-
-
-
