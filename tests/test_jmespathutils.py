@@ -10,6 +10,7 @@ import cuid
 import xmltodict
 
 
+import jmespath.exceptions
 import jmespathutils
 
 
@@ -50,3 +51,18 @@ class TestJmespathutils(unittest.TestCase):
         text = f'{cuid.cuid()}\n{cuid.cuid()}\n{cuid.cuid()}\n{cuid.cuid()}\n'
         self.assertEqual(jmespathutils.index_to_coordinates(text, 0), (1, 1))
         self.assertEqual(jmespathutils.index_to_coordinates(text, 35), (2, 10))
+
+    def test_context_function_initialized(self):
+        data = {cuid.cuid(): cuid.cuid()}
+        functions = jmespathutils.functions.ContextFunctions(data)
+        self.assertEqual(functions._context, data)
+        self.assertEqual(functions._func_context(), data)
+
+    def test_jmespath_function_context_not_initialized(self):
+        with self.assertRaises(jmespath.exceptions.UnknownFunctionError, msg='Unknown function: context()'):
+            self.assertIsNone(jmespathutils.search('context()', {}))
+
+    def test_jmespath_function_context_initialized(self):
+        data = {cuid.cuid(): cuid.cuid()}
+        result = jmespathutils.search('context()', {}, context_function_data=data)
+        self.assertEqual(result, data)

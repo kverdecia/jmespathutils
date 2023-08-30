@@ -22,3 +22,15 @@ class Functions(jmespath.functions.Functions):
     @jmespath.functions.signature()
     def _func_cuid(self) -> str:
         return cuid.cuid()
+
+
+class ContextFunctions(Functions):
+    _context: dict[str, Any]
+
+    def __init__(self, context: dict[str, Any], *args, **kwargs):
+        self._context = context
+        super().__init__(*args, **kwargs)
+
+    @jmespath.functions.signature()
+    def _func_context(self) -> dict[str, Any] | None:
+        return self._context
