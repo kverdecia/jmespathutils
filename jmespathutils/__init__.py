@@ -14,8 +14,11 @@ from . import functions
 _OPTIONS = jmespath.Options(custom_functions=functions.Functions())
 
 
-def search(condition: str, context: Any) -> Any:
-    return jmespath.search(condition, context, options=_OPTIONS)
+def search(condition: str, context: Any, context_function_data: dict | None = None) -> Any:
+    if context_function_data is None:
+        return jmespath.search(condition, context, options=_OPTIONS)
+    options = jmespath.Options(custom_functions=functions.ContextFunctions(context_function_data))
+    return jmespath.search(condition, context, options=options)
 
 
 def index_to_coordinates(s, index):
