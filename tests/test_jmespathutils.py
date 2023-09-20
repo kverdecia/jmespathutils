@@ -19,21 +19,21 @@ class TestJmespathutils(unittest.TestCase):
         a = cuid.cuid()
         b = cuid.cuid()
         xml = f'<root><a>{a}</a><b>{b}</b></root>'
-        result = jmespathutils.search('xml_to_json(`{}`)'.format(xml), {})
+        result = jmespathutils.search('xml_to_json(@)', xml)
         self.assertEqual(result, {'root': {'a': a, 'b': b}})
 
     def test_jmespath_function_xml_to_json_parameter_is_null(self):
         with patch.object(xmltodict, 'parse') as mock_parse:
-            result = jmespathutils.search('xml_to_json(null)', {})
+            result = jmespathutils.search('xml_to_json(@)', None)
             self.assertIsNone(result)
             mock_parse.assert_not_called()
 
     def test_jmespath_function_xml_to_json_empty(self):
-        self.assertRaises(xml.parsers.expat.ExpatError, jmespathutils.search, 'xml_to_json(``)', {})
+        self.assertRaises(xml.parsers.expat.ExpatError, jmespathutils.search, 'xml_to_json(@)', '')
 
     def test_jmespath_function_xml_to_json_invalid(self):
         src = '<root><a>'
-        self.assertRaises(xml.parsers.expat.ExpatError, jmespathutils.search, 'xml_to_json(`{}`)'.format(src), {})
+        self.assertRaises(xml.parsers.expat.ExpatError, jmespathutils.search, 'xml_to_json(@)', src)
 
     def test_jmespath_function_uuid(self):
         expected = str(uuid.uuid4())
@@ -46,6 +46,10 @@ class TestJmespathutils(unittest.TestCase):
         with patch.object(cuid, 'cuid', return_value=expected):
             result = jmespathutils.search('cuid()', {})
             self.assertEqual(result, expected)
+
+    def test_jmespath_function_unique(self):
+        result = jmespathutils.search('unique(@)', [1, 2, 3, 1, 2, 3, 1, 2, 3])
+        self.assertEqual(result, [1, 2, 3])
 
     def test_function_index_to_coordinates(self):
         text = f'{cuid.cuid()}\n{cuid.cuid()}\n{cuid.cuid()}\n{cuid.cuid()}\n'
