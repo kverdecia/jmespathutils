@@ -23,6 +23,10 @@ class Functions(jmespath.functions.Functions):
     def _func_cuid(self) -> str:
         return cuid.cuid()
 
+    @jmespath.functions.signature({"types": ['array-string', 'array-number']})
+    def _func_unique(self, items: list[str | int | float]) -> Any:
+        return list(frozenset(items))
+
 
 class ContextFunctions(Functions):
     _context: dict[str, Any]

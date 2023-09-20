@@ -27,6 +27,7 @@ setup(
             "wheel",
             "zest.releaser",
             "flake8",
+            "pytest",
         ]
     },
     author="Karel Antonio Verdecia Ortiz",
