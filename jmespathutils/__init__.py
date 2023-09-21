@@ -2,7 +2,7 @@
 
 __author__ = """Karel Antonio Verdecia Ortiz"""
 __email__ = 'kverdecia@gmail.com'
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 from typing import Any
 
