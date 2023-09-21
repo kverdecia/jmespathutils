@@ -55,6 +55,10 @@ class TestJmespathutils(unittest.TestCase):
         result = jmespathutils.search('unique_by(@, &a)', [{'a': 1}, {'a': 2}, {'a': 1}, {'a': 2}])
         self.assertEqual(result, [{'a': 1}, {'a': 2}])
 
+    def test_jmespath_function_to_object(self):
+        result = jmespathutils.search("to_object(@, 'a')", [1, 2, 3])
+        self.assertEqual(result, [{'a': 1}, {'a': 2}, {'a': 3}])
+
     def test_function_index_to_coordinates(self):
         text = f'{cuid.cuid()}\n{cuid.cuid()}\n{cuid.cuid()}\n{cuid.cuid()}\n'
         self.assertEqual(jmespathutils.index_to_coordinates(text, 0), (1, 1))
