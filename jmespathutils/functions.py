@@ -27,6 +27,20 @@ class Functions(jmespath.functions.Functions):
     def _func_unique(self, items: list[str | int | float]) -> Any:
         return list(frozenset(items))
 
+    @jmespath.functions.signature({'types': ['array']}, {'types': ['expref']})
+    def _func_unique_by(self, array: list[Any], expref: Any) -> Any:
+        if not array:
+            return array
+        key_func = self._create_key_func(expref, ['number', 'string'], 'unique_by')  # type: ignore
+        added = set()
+        result = []
+        for item in array:
+            key = key_func(item)
+            if key not in added:
+                added.add(key)
+                result.append(item)
+        return result
+
 
 class ContextFunctions(Functions):
     _context: dict[str, Any]
